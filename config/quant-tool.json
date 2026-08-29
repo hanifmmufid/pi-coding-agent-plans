@@ -1,0 +1,11 @@
+{
+  "provider": "litellm",
+  "model": "cmd-deepseek-v4-pro",
+  "fallbacks": [
+    "cmd-deepseek-v4-flash"
+  ],
+  "maxTokens": 8000,
+  "temperature": 0,
+  "retries": 2,
+  "enabled": true
+}

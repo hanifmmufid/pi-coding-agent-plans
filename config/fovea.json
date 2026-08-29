@@ -1,0 +1,13 @@
+{
+  "sync": {
+    "mode": "hidden",
+    "scope": "session",
+    "budget": 256,
+    "pushFocus": false
+  },
+  "tools": {
+    "defaultBudget": 512,
+    "grepMode": "augment",
+    "grepAugmentBudget": 256
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "provider": "litellm",
+  "model": "cmd-qwen3.8-max",
+  "maxDimension": 1568,
+  "jpegQuality": 85,
+  "defaultReasoningEffort": "medium",
+  "enabled": true
+}

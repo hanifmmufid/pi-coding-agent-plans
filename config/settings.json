@@ -1,0 +1,13 @@
+{
+  "lastChangelogVersion": "0.84.2",
+  "theme": "dark",
+  "packages": [
+    "npm:@sentiolabs/pi-frontend-design",
+    "npm:@scottrbk/browser-screenshot",
+    "npm:pi-vision-tool",
+    "npm:pi-code-graph",
+    "npm:pi-fovea"
+  ],
+  "defaultProvider": "litellm",
+  "defaultModel": "cmd-deepseek-v4-flash"
+}

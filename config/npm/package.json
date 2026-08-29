@@ -1,0 +1,11 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "@scottrbk/browser-screenshot": "^1.0.0",
+    "@sentiolabs/pi-frontend-design": "^0.1.1",
+    "pi-code-graph": "^0.16.0",
+    "pi-fovea": "^0.18.3",
+    "pi-vision-tool": "^1.3.7"
+  }
+}

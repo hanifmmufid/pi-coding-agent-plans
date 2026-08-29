@@ -22,6 +22,7 @@ workflow trading/ML yang scope-aware dengan delegasi model nyata.
 | 07 | [Codebase Understanding Study Workflow](07_PI_Codebase_Understanding_Study_Workflow_Improvement_Plan.md) | Skill `codebase-study`: pemahaman repo baru secara cepat & hemat token |
 | 08 | [Migrate Memgraph → Pi Fovea](08_PI_Migrate_Memgraph_to_Fovea_Implementation_Plan.md) | Ganti `pi-code-graph + Memgraph` dengan `pi-fovea` (lightweight awareness) |
 | 09 | [Scope-Aware Quant Analyst (Qwen 3.8 Max)](09_PI_Qwen38Max_Scope_Aware_Quant_Analyst_Improvement_Plan.md) | Skill `trading-backtest-analysis`: quant review scope-aware + Execution Contract |
+| 📁 | [Config Snapshot Aktif](config/README.md) | Snapshot konfigurasi pi yang berjalan (models, prompts, extensions, skills) |
 
 ---
 
@@ -115,6 +116,15 @@ pi
 # Reload extension & config setelah perubahan
 /reload
 ```
+
+---
+
+## 📁 Config Snapshot Aktif
+
+Folder [`config/`](config/README.md) berisi snapshot konfigurasi pi yang sedang
+berjalan di VPS (`~/.pi/agent/`): AGENTS.md, models.json (11 model), settings,
+quant-tool, vision-tool, fovea, prompts, extensions, dan skills.
+Rahasia (apiKey) disensor.
 
 ---
 
