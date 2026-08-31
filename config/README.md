@@ -14,7 +14,7 @@ realita konfigurasi yang berjalan.
 ```
 config/
 ├── AGENTS.md                    → Global execution rules (permission gate, scope, model stack)
-├── models.json                  → 11 model terdaftar via LiteLLM (apiKey disensor)
+├── models.json                  → 13 model terdaftar via LiteLLM (apiKey disensor)
 ├── settings.json                → packages, defaultProvider, defaultModel
 ├── quant-tool.json              → Config tool quant_review (cmd-deepseek-v4-pro)
 ├── vision-tool.json             → Config tool describe_image (cmd-qwen3.8-max)
@@ -30,7 +30,7 @@ config/
 
 ## ⚙️ Ringkasan Config Aktif
 
-### models.json — 11 model (provider: LiteLLM → localhost:4000)
+### models.json — 13 model (provider: LiteLLM → localhost:4000)
 
 | Model | Provider | Peran |
 |-------|----------|-------|
@@ -45,6 +45,8 @@ config/
 | `cmd-muse-1.2-contributor` | Command Code | Cadangan |
 | `cmd-glm-5.3-flash` | Command Code | Cadangan |
 | `cmd-minimax-m3-free` | Command Code | Cadangan |
+| `router-deepseek-v4-flash-vision-exp` | LiteLLM router | Vision experimen |
+| `router-deepseek-v4-pro-0813` | LiteLLM router | Alternatif pro |
 
 **Kebijakan:** prefer `cmd-*` (Command Code) — OpenCode Go quota hampir habis.
 Semua peran utama (executor, quant, vision) sudah pindah ke `cmd-*`.
@@ -93,6 +95,7 @@ Semua peran utama (executor, quant, vision) sudah pindah ke `cmd-*`.
 | `permission-gate.ts` | Gate izin AUTO/ASK/BLOCK untuk command berbahaya |
 | `protected-paths.ts` | Proteksi path sensitif (.env, credentials, *.pem, dll) |
 | `quant-review-tool.ts` | Tool `quant_review` + command `/quant` (delegasi model via LiteLLM) |
+| `vision-tool.ts` | Tool `describe_image` + command `/vision` (selector model + list) |
 
 ## 🎓 Skills (`config/skills/`)
 

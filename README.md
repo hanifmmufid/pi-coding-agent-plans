@@ -59,8 +59,8 @@ Pi bekerja sebagai executor yang mandiri:
 
 | Peran | Model | Provider |
 |-------|-------|----------|
-| Executor default | `go-deepseek-v4-flash` | OpenCode Go |
-| Escalation | `go-deepseek-v4-pro` | OpenCode Go |
+| Executor default | `router-deepseek-v4-flash-vision-exp` | LiteLLM router |
+| Escalation | `cmd-deepseek-v4-pro` | Command Code |
 | **Quant reviewer** | `cmd-deepseek-v4-pro` (+fallback `cmd-deepseek-v4-flash`) | Command Code |
 | **Vision** | `cmd-qwen3.8-max` | Command Code |
 
@@ -75,7 +75,7 @@ jadi quant review memakai DeepSeek V4 Pro (Command Code).
 ```
 ~/.pi/agent/
 ├── AGENTS.md                    → Global execution rules (permission gate, scope, model)
-├── models.json                  → 11 model terdaftar (go-*, pi-*, cmd-*)
+├── models.json                  → 13 model terdaftar (go-*, pi-*, cmd-*, router-*)
 ├── settings.json                → packages: frontend-design, browser-screenshot, vision-tool, fovea
 ├── quant-tool.json              → Config tool quant_review (cmd-deepseek-v4-pro)
 ├── vision-tool.json             → Config tool describe_image (cmd-qwen3.8-max)
@@ -122,7 +122,7 @@ pi
 ## 📁 Config Snapshot Aktif
 
 Folder [`config/`](config/README.md) berisi snapshot konfigurasi pi yang sedang
-berjalan di VPS (`~/.pi/agent/`): AGENTS.md, models.json (11 model), settings,
+berjalan di VPS (`~/.pi/agent/`): AGENTS.md, models.json (13 model), settings,
 quant-tool, vision-tool, fovea, prompts, extensions, dan skills.
 Rahasia (apiKey) disensor.
 

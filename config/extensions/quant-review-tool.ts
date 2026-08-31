@@ -354,7 +354,7 @@ export default function quantReviewToolExtension(pi: ExtensionAPI) {
   });
 
   pi.registerCommand("quant", {
-    description: "Quant review tool settings (config, show, on, off)",
+    description: "Quant review tool settings (config, show, on, off, list)",
     handler: async (args, ctx) => {
       const trimmed = args?.trim() ?? "";
       if (!trimmed) {
@@ -363,6 +363,37 @@ export default function quantReviewToolExtension(pi: ExtensionAPI) {
       }
       const [subcommand, key, ...rest] = trimmed.split(/\s+/);
       const value = rest.join(" ");
+
+      // Helper: tampilkan selector model & set langsung ke config + simpan.
+      const pickQuantModel = async (title: string): Promise<void> => {
+        const models = ctx.modelRegistry.getAvailable();
+        if (models.length === 0) {
+          ctx.ui.notify("No models available. Check models.json.", "warning");
+          return;
+        }
+        const current = config.model ?? "";
+        const choices = models.map((m) => ({
+          value: `${m.provider}/${m.id}`,
+          label: `${m.id} (${m.provider})${m.id === current ? "  ← aktif" : ""}`,
+        }));
+        const choice = await ctx.ui.select(
+          title,
+          choices.map((c) => c.label),
+          { timeout: 120_000 },
+        );
+        if (!choice) {
+          ctx.ui.notify("Dibatalkan.", "info");
+          return;
+        }
+        const sel = choices.find((c) => c.label === choice);
+        if (!sel) return;
+        const slash = sel.value.indexOf("/");
+        config.provider = slash === -1 ? sel.value : sel.value.slice(0, slash);
+        config.model = slash === -1 ? sel.value : sel.value.slice(slash + 1);
+        writeConfig();
+        ctx.ui.notify(`Quant model set to ${config.provider}/${config.model}`, "info");
+      };
+
       switch (subcommand) {
         case "on":
           config.enabled = true;
@@ -378,21 +409,26 @@ export default function quantReviewToolExtension(pi: ExtensionAPI) {
         case "status":
           ctx.ui.notify(configSummary(), "info");
           break;
+        case "list":
+        case "models":
+          await pickQuantModel("Pilih model quant reviewer:");
+          break;
         case "config":
-          if (key === "provider" && value) {
-            config.provider = value;
-            writeConfig();
-            ctx.ui.notify(`Quant provider set to ${value}`, "info");
-          } else if (key === "model" && value) {
-            config.model = value;
-            writeConfig();
-            ctx.ui.notify(`Quant model set to ${value}`, "info");
+          if (key === "provider") {
+            if (value) {
+              config.provider = value;
+              writeConfig();
+              ctx.ui.notify(`Quant provider set to ${value}`, "info");
+            } else {
+              await pickQuantModel("Pilih model quant reviewer (provider+model):");
+            }
           } else {
-            ctx.ui.notify("Usage: /quant config provider <p> | /quant config model <m>", "info");
+            // config model (dengan nilai) → set model; (tanpa nilai) → selector
+            await pickQuantModel("Pilih model quant reviewer:");
           }
           break;
         default:
-          ctx.ui.notify("Usage: /quant [show|on|off|config provider <p>|config model <m>]", "info");
+          ctx.ui.notify("Usage: /quant [show|on|off|list|config provider <p>|config model <m>]", "info");
       }
     },
   });
