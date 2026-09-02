@@ -185,39 +185,6 @@
             "cacheRead": 0.007,
             "cacheWrite": 0
           }
-        },
-        {
-          "id": "router-deepseek-v4-flash-vision-exp",
-          "name": "DeepSeek V4 Flash Vision Exp (Router)",
-          "reasoning": true,
-          "input": [
-            "text",
-            "image"
-          ],
-          "contextWindow": 200000,
-          "maxTokens": 8192,
-          "cost": {
-            "input": 0.22,
-            "output": 0.66,
-            "cacheRead": 0.007,
-            "cacheWrite": 0
-          }
-        },
-        {
-          "id": "router-deepseek-v4-pro-0813",
-          "name": "DeepSeek V4 Pro 0813 (Router)",
-          "reasoning": true,
-          "input": [
-            "text"
-          ],
-          "contextWindow": 200000,
-          "maxTokens": 8192,
-          "cost": {
-            "input": 0.66,
-            "output": 1.98,
-            "cacheRead": 0.022,
-            "cacheWrite": 0
-          }
         }
       ]
     }
