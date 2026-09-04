@@ -88,6 +88,12 @@ Semua peran utama (executor, quant, vision) sudah pindah ke `cmd-*`.
 | `study-codebase.md` | Prompt workflow codebase-study |
 | `refresh-codebase-docs.md` | Prompt refresh docs/codebase |
 
+> 📌 **Frontend Hardening (plan 10):** `AGENTS.md` memuat subsection
+> `Framework-Native Production Frontend` (framework-native guard + production
+> states + TECHNICAL/FUNCTIONAL/VISUAL gates); `execute.md` memuat
+> `Frontend Production Gate`; `fix.md` memuat `Frontend Fix Rules`;
+> `review.md` memuat `Frontend Review` tiga dimensi.
+
 ## 🔌 Extensions (`config/extensions/`)
 
 | File | Fungsi |

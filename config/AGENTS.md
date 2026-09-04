@@ -362,6 +362,40 @@ When vision budget is exhausted:
 - report remaining material issues if any,
 - do not silently continue calling the vision model.
 
+### Framework-Native Production Frontend
+
+Frontend design requirements are framework-agnostic; implementation must stay framework-native.
+
+Before meaningful frontend implementation:
+
+1. Detect the active frontend framework, version, rendering model, styling system, component library, and routing model.
+2. Inspect the project's existing architecture and component conventions (framework config, entrypoints, app structure, package.json/manifest).
+3. Reuse existing project components, tokens, and patterns before creating new ones.
+4. Follow framework-native patterns and APIs (React/Next, Vue/Nuxt, Svelte/SvelteKit, Angular, Astro, HTMX/Alpine, Laravel Blade, Django Templates, Rails, Odoo OWL/QWeb, plain HTML/CSS/JS).
+5. Do not import architectural patterns from another framework unnecessarily.
+6. Do not force generic SaaS styling onto convention-heavy frameworks (e.g., Odoo must stay OWL/QWeb-native with operational density).
+7. If the framework is unfamiliar, inspect local project structure/config/docs first.
+8. Keep the same visual quality requirements regardless of framework.
+
+Design quality stays universal; implementation stays native to the framework actually used by the project.
+
+For production-facing UI, check relevant states when applicable:
+
+- data-driven pages: normal, loading, empty, error;
+- forms: validation error, disabled/submitting, success/feedback when relevant;
+- tables/lists: empty, long content, horizontal overflow, mobile behavior;
+- general: long-content behavior, overflow behavior, responsive edge cases, basic accessibility (clear labels, usable focus states, reasonable semantic structure, keyboard-accessible primary actions, sufficient visual distinction for interactive controls, no critical information conveyed by color alone).
+
+Do not require irrelevant states, and do not turn every task into a full accessibility audit.
+
+Frontend work is complete only when the relevant completion gates pass:
+
+TECHNICAL — build passes, no broken imports, no obvious runtime errors, framework conventions respected, relevant existing lint/tests pass.
+
+FUNCTIONAL — primary navigation works, important actions work, forms work, relevant loading/error/empty states work, responsive behavior is usable, data interaction behaves as intended.
+
+VISUAL — actual rendered UI reviewed, desktop acceptable, mobile acceptable, no major overlap, no severe overflow, clear hierarchy, typography readable, important actions visible, consistent with the existing design language. Minor-only cosmetic issues do not block completion.
+
 ## Codebase Knowledge & Awareness Workflow
 
 When working in a large or unfamiliar repository:

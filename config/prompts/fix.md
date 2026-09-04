@@ -75,6 +75,17 @@ If the reported issue affects frontend/UI/UX, including layout, spacing, styling
 6. Validate desktop and mobile when the issue may affect responsiveness.
 7. Do not declare DONE without visual validation.
 
+### Frontend Fix Rules
+
+When fixing frontend issues:
+
+- preserve the existing design language;
+- follow framework-native implementation patterns;
+- fix the smallest relevant area;
+- recheck only the affected production states;
+- repeat screenshot review only after a meaningful visual change;
+- do not expand scope into redesign unless required.
+
 ### Frontend Screenshot Review
 
 For visual/frontend fixes:

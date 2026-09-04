@@ -22,6 +22,7 @@ workflow trading/ML yang scope-aware dengan delegasi model nyata.
 | 07 | [Codebase Understanding Study Workflow](07_PI_Codebase_Understanding_Study_Workflow_Improvement_Plan.md) | Skill `codebase-study`: pemahaman repo baru secara cepat & hemat token |
 | 08 | [Migrate Memgraph → Pi Fovea](08_PI_Migrate_Memgraph_to_Fovea_Implementation_Plan.md) | Ganti `pi-code-graph + Memgraph` dengan `pi-fovea` (lightweight awareness) |
 | 09 | [Scope-Aware Quant Analyst (Qwen 3.8 Max)](09_PI_Qwen38Max_Scope_Aware_Quant_Analyst_Improvement_Plan.md) | Skill `trading-backtest-analysis`: quant review scope-aware + Execution Contract |
+| 10 | [Existing Frontend Skill Hardening](10_PI_Existing_Frontend_Skill_Hardening_Improvement_Plan.md) | Hardening frontend: framework-native guard, production states, 3 completion gates (additive, bukan rewrite) |
 | 📁 | [Config Snapshot Aktif](config/README.md) | Snapshot konfigurasi pi yang berjalan (models, prompts, extensions, skills) |
 
 ---
@@ -52,6 +53,13 @@ Pi bekerja sebagai executor yang mandiri:
 - `EXPERIMENT_SCOPE.md` di-bootstrap otomatis oleh executor (bukan reviewer — conflict of interest)
 - **Execution Contract**: review selesai → eksekusi IN_SCOPE langsung, FUTURE_IMPROVEMENTS dipersist
 - Review budget: default 1 / max 2 per milestone
+
+### 5. Existing Frontend Skill Hardening (10)
+- Hardening **additive** pada workflow frontend yang sudah ada (bukan rewrite, bukan skill baru)
+- **Framework-native guard**: deteksi framework/version/rendering/styling/komponen sebelum implementasi
+- **Production states**: loading, empty, error, disabled, long-content, overflow, responsive, aksesibilitas dasar
+- **3 completion gates**: TECHNICAL, FUNCTIONAL, VISUAL
+- Anti-loop vision (max 2 calls) & workflow screenshot tetap utuh
 
 ---
 
@@ -130,7 +138,7 @@ Rahasia (apiKey) disensor.
 
 ## 📌 Status Terakhir
 
-- **9/9 plan** terimplementasi & terverifikasi end-to-end
+- **10/10 plan** terimplementasi & terverifikasi end-to-end
 - Quant review: **real model delegation** (bukan role-play), header transparan `[quant_review by litellm/<model>]`
 - Vision & quant sudah 100% memakai model `cmd-*` (Command Code)
 - Lihat `server-docs/16-pi-coding-agent-setup.md` untuk dokumentasi setup lengkap

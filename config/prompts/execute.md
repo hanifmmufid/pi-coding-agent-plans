@@ -171,6 +171,17 @@ If any implementation step creates or changes frontend/UI/UX:
 
 Build, lint, or unit-test success alone is NOT sufficient to mark frontend work DONE.
 
+### Frontend Production Gate
+
+Before meaningful frontend implementation:
+
+1. Detect framework and project conventions (framework, version, rendering model, styling system, component conventions, routing).
+2. Apply the existing `frontend-design` workflow.
+3. Implement using framework-native patterns.
+4. Validate relevant production states (loading, empty, error, disabled/submitting, long content, overflow, responsive edge cases, basic accessibility).
+5. Complete the Technical, Functional, and Visual gates.
+6. Do not declare DONE until all relevant gates pass.
+
 ### Frontend Vision Validation
 
 When frontend visual validation reaches the screenshot-inspection step:

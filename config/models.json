@@ -14,7 +14,7 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.22,
             "output": 0.66,
@@ -30,7 +30,7 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.66,
             "output": 1.98,
@@ -47,7 +47,7 @@
             "image"
           ],
           "contextWindow": 256000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 2.0,
             "output": 6.0,
@@ -64,7 +64,7 @@
             "image"
           ],
           "contextWindow": 256000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 2.0,
             "output": 6.0,
@@ -81,7 +81,7 @@
             "image"
           ],
           "contextWindow": 256000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 2.0,
             "output": 6.0,
@@ -97,7 +97,7 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.22,
             "output": 0.66,
@@ -113,7 +113,7 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.66,
             "output": 1.98,
@@ -130,7 +130,7 @@
             "image"
           ],
           "contextWindow": 256000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 2.0,
             "output": 6.0,
@@ -146,7 +146,7 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.22,
             "output": 0.66,
@@ -162,7 +162,7 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.22,
             "output": 0.66,
@@ -178,7 +178,104 @@
             "text"
           ],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 32000,
+          "cost": {
+            "input": 0.22,
+            "output": 0.66,
+            "cacheRead": 0.007,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "cmd2-deepseek-v4-flash",
+          "name": "DeepSeek V4 Flash (Command Code 2)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 32000,
+          "cost": {
+            "input": 0.22,
+            "output": 0.66,
+            "cacheRead": 0.007,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "cmd2-deepseek-v4-pro",
+          "name": "DeepSeek V4 Pro (Command Code 2)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 32000,
+          "cost": {
+            "input": 0.66,
+            "output": 1.98,
+            "cacheRead": 0.022,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "cmd2-qwen3.8-max",
+          "name": "Qwen3.8 Max (Command Code 2)",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 256000,
+          "maxTokens": 32000,
+          "cost": {
+            "input": 2.0,
+            "output": 6.0,
+            "cacheRead": 0.25,
+            "cacheWrite": 2.5
+          }
+        },
+        {
+          "id": "cmd2-muse-1.2-contributor",
+          "name": "Muse Spark 1.2 Contributor (Command Code 2)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 32000,
+          "cost": {
+            "input": 0.22,
+            "output": 0.66,
+            "cacheRead": 0.007,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "cmd2-glm-5.3-flash",
+          "name": "GLM 5.3 Flash (Command Code 2)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 32000,
+          "cost": {
+            "input": 0.22,
+            "output": 0.66,
+            "cacheRead": 0.007,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "cmd2-minimax-m3-free",
+          "name": "MiniMax M3 Free (Command Code 2)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 32000,
           "cost": {
             "input": 0.22,
             "output": 0.66,

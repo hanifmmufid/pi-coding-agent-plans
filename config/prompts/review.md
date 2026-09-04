@@ -62,6 +62,21 @@ Check:
 
 Frontend review is incomplete if only the source diff is reviewed while the rendered result is available.
 
+### Frontend Review
+
+Review frontend work across three dimensions:
+
+TECHNICAL
+- build/runtime/framework correctness
+
+FUNCTIONAL
+- interactions, state handling, responsive usability
+
+VISUAL
+- actual rendered quality, hierarchy, spacing, typography, consistency
+
+Do not fail a task for minor cosmetic issues when functionality and visual quality are already acceptable.
+
 ### Delegated Visual Review
 
 If frontend changes exist and the active model cannot inspect screenshots:
