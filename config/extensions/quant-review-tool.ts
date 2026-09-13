@@ -19,7 +19,7 @@
  *   {
  *     "provider": "litellm",
  *     "model": "cmd-deepseek-v4-pro",
- *     "maxTokens": 8000,
+ *     "maxTokens": 32000,
  *     "temperature": 0,
  *     "enabled": true
  *   }
@@ -56,7 +56,7 @@ const DEFAULT_CONFIG: QuantConfig = {
   provider: "litellm",
   model: "cmd-deepseek-v4-pro",
   fallbacks: ["cmd-deepseek-v4-flash"],
-  maxTokens: 8000,
+  maxTokens: 32000,
   temperature: 0,
   retries: 2,
   enabled: true,

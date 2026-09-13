@@ -14,13 +14,13 @@ realita konfigurasi yang berjalan.
 ```
 config/
 ├── AGENTS.md                    → Global execution rules (permission gate, scope, model stack)
-├── models.json                  → 13 model terdaftar via LiteLLM (apiKey disensor)
+├── models.json                  → 20 model terdaftar via LiteLLM (apiKey disensor)
 ├── settings.json                → packages, defaultProvider, defaultModel
 ├── quant-tool.json              → Config tool quant_review (cmd-deepseek-v4-pro)
 ├── vision-tool.json             → Config tool describe_image (cmd-qwen3.8-max)
 ├── fovea.json                   → Config Pi Fovea (sync mode, budget)
 ├── npm/
-│   └── package.json             → Packages terpasang (frontend-design, screenshot, vision, fovea)
+│   └── package.json             → Packages terpasang (frontend-design, screenshot, fovea)
 ├── prompts/                     → Template prompt (/execute, /fix, /review, quant, dll)
 ├── extensions/                  → Extension TypeScript (permission-gate, protected-paths, quant-review-tool)
 └── skills/                      → SKILL.md (frontend-design, codebase-study, trading-backtest-analysis)
@@ -30,35 +30,43 @@ config/
 
 ## ⚙️ Ringkasan Config Aktif
 
-### models.json — 13 model (provider: LiteLLM → localhost:4000)
+### models.json — 20 model (provider: LiteLLM → localhost:4000)
 
-| Model | Provider | Peran |
-|-------|----------|-------|
-| `go-deepseek-v4-flash` | OpenCode Go | Legacy executor |
-| `go-deepseek-v4-pro` | OpenCode Go | Legacy escalation |
-| `go-qwen3.8-max` | OpenCode Go | Legacy (text+image, flaky) |
-| `pi-qwen3.8-max` | Console Go | Legacy vision |
-| `go-qwen3.7-max` | OpenCode Go | Legacy alternatif |
-| `cmd-deepseek-v4-flash` | **Command Code** | ⭐ Executor default (`settings.json`) |
+| Model | Akun/Provider | Peran |
+|-------|---------------|-------|
+| `cmd-deepseek-v4-flash` | Command Code | Executor (generasi sebelumnya) |
+| `cmd-deepseek-v4.1-flash` | **Command Code** | ⭐ Executor default (`settings.json`) |
 | `cmd-deepseek-v4-pro` | **Command Code** | ⭐ Quant reviewer |
 | `cmd-qwen3.8-max` | **Command Code** | ⭐ Vision model |
 | `cmd-muse-1.2-contributor` | Command Code | Cadangan |
 | `cmd-glm-5.3-flash` | Command Code | Cadangan |
 | `cmd-minimax-m3-free` | Command Code | Cadangan |
-| `router-deepseek-v4-flash-vision-exp` | LiteLLM router | Vision experimen |
-| `router-deepseek-v4-pro-0813` | LiteLLM router | Alternatif pro |
+| `cmd2-deepseek-v4-flash` | Command Code (akun 2) | Cadangan (failover akun) |
+| `cmd2-deepseek-v4.1-flash` | Command Code (akun 2) | Cadangan (failover akun) |
+| `cmd2-deepseek-v4-pro` | Command Code (akun 2) | Cadangan (failover akun) |
+| `cmd2-qwen3.8-max` | Command Code (akun 2) | Cadangan (failover akun) |
+| `cmd2-muse-1.2-contributor` | Command Code (akun 2) | Cadangan (failover akun) |
+| `cmd2-glm-5.3-flash` | Command Code (akun 2) | Cadangan (failover akun) |
+| `cmd2-minimax-m3-free` | Command Code (akun 2) | Cadangan (failover akun) |
+| `go-deepseek-v4-flash` | OpenCode Go | Legacy executor |
+| `go-deepseek-v4-pro` | OpenCode Go | Legacy escalation |
+| `go-qwen3.8-max` | OpenCode Go | Legacy (text+image, flaky) |
+| `go-qwen3.7-max` | OpenCode Go | Legacy alternatif |
+| `go-minimax-m3` | OpenCode Go | Legacy |
+| `pi-qwen3.8-max` | Console Go | Legacy vision |
 
 **Kebijakan:** prefer `cmd-*` (Command Code) — OpenCode Go quota hampir habis.
 Semua peran utama (executor, quant, vision) sudah pindah ke `cmd-*`.
+Pasangan `cmd2-*` memakai akun Command Code kedua (fallback bila akun 1 limit).
 
 ### settings.json
 - `defaultProvider: "litellm"`
-- `defaultModel: "cmd-deepseek-v4-flash"`
-- Packages: frontend-design, browser-screenshot, pi-vision-tool, pi-code-graph (nonaktif), pi-fovea
+- `defaultModel: "cmd-deepseek-v4.1-flash"`
+- Packages: frontend-design, browser-screenshot, pi-fovea
 
 ### quant-tool.json (tool `quant_review`)
 ```json
-{ "model": "cmd-deepseek-v4-pro", "fallbacks": ["cmd-deepseek-v4-flash"], "retries": 2 }
+{ "model": "cmd-deepseek-v4-pro", "fallbacks": ["cmd-deepseek-v4-flash"], "maxTokens": 32000, "retries": 2 }
 ```
 
 ### vision-tool.json (tool `describe_image`)

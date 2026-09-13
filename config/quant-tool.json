@@ -4,7 +4,7 @@
   "fallbacks": [
     "cmd-deepseek-v4-flash"
   ],
-  "maxTokens": 8000,
+  "maxTokens": 32000,
   "temperature": 0,
   "retries": 2,
   "enabled": true
