@@ -14,7 +14,7 @@ realita konfigurasi yang berjalan.
 ```
 config/
 ├── AGENTS.md                    → Global execution rules (permission gate, scope, model stack)
-├── models.json                  → 20 model terdaftar via LiteLLM (apiKey disensor)
+├── models.json                  → 22 model terdaftar via LiteLLM (apiKey disensor)
 ├── settings.json                → packages, defaultProvider, defaultModel
 ├── quant-tool.json              → Config tool quant_review (cmd-deepseek-v4-pro)
 ├── vision-tool.json             → Config tool describe_image (cmd-qwen3.8-max)
@@ -30,7 +30,7 @@ config/
 
 ## ⚙️ Ringkasan Config Aktif
 
-### models.json — 20 model (provider: LiteLLM → localhost:4000)
+### models.json — 22 model (provider: LiteLLM → localhost:4000)
 
 | Model | Akun/Provider | Peran |
 |-------|---------------|-------|
@@ -48,6 +48,8 @@ config/
 | `cmd2-muse-1.2-contributor` | Command Code (akun 2) | Cadangan (failover akun) |
 | `cmd2-glm-5.3-flash` | Command Code (akun 2) | Cadangan (failover akun) |
 | `cmd2-minimax-m3-free` | Command Code (akun 2) | Cadangan (failover akun) |
+| `nut-deepseek-v4.1-flash` | Nutaraline (gateway) | Gateway OpenAI-compatible |
+| `nut-glm-5.3-flash` | Nutaraline (gateway) | Gateway OpenAI-compatible |
 | `go-deepseek-v4-flash` | OpenCode Go | Legacy executor |
 | `go-deepseek-v4-pro` | OpenCode Go | Legacy escalation |
 | `go-qwen3.8-max` | OpenCode Go | Legacy (text+image, flaky) |
