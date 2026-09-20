@@ -108,7 +108,7 @@ Pasangan `cmd2-*` memakai akun Command Code kedua (fallback bila akun 1 limit).
 
 | File | Fungsi |
 |------|--------|
-| `permission-gate.ts` | Gate izin AUTO/ASK/BLOCK untuk command berbahaya |
+| `permission-gate.ts` | Gate izin AUTO/ASK/BLOCK untuk command berbahaya + **auto-approve per pane** (toggle `AUTO` di panel tab-dashboard; state `~/.pi/agent/auto-approve.json`, audit `~/.pi/agent/auto-approve.log`) |
 | `protected-paths.ts` | Proteksi path sensitif (.env, credentials, *.pem, dll) |
 | `quant-review-tool.ts` | Tool `quant_review` + command `/quant` (delegasi model via LiteLLM) |
 | `vision-tool.ts` | Tool `describe_image` + command `/vision` (selector model + list) |
@@ -140,6 +140,10 @@ cp ~/.pi/agent/extensions/permission-gate.ts config/extensions/
 cp ~/.pi/agent/extensions/protected-paths.ts config/extensions/
 cp ~/.pi/agent/extensions/quant-review-tool.ts config/extensions/
 ```
+
+> ℹ️ State runtime **tidak** ikut di-commit (bukan config):
+> `~/.pi/agent/auto-approve.json` (toggle auto-approve per pane, ditulis dashboard)
+> dan `~/.pi/agent/auto-approve.log` (audit perintah destruktif yang di-auto-approve).
 
 **⚠️ Jangan lupa sensor apiKey di models.json** sebelum commit:
 ```python

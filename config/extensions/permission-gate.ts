@@ -13,9 +13,47 @@
  *            dst.
  *
  * Command yang TIDAK match pola destruktif = auto-dijalankan (whitelist implicit).
+ *
+ * AUTO-APPROVE per pane (toggle di dashboard): kalau pane tmux tempat pi ini
+ * berjalan di-ON-kan lewat dashboard (endpoint /pi/auto-approve), konfirmasi
+ * destruktif dijawab otomatis "Yes" — jadi tidak nunggu user yang sedang tidak
+ * di tempat. Identitas agent = $TMUX_PANE (bukan nama session: grouped session
+ * membuat nama session tidak bisa dipakai sebagai identitas).
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { appendFileSync, readFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
+
+// ===== Auto-approve per pane =====
+// File state ini juga ditulis dashboard lewat tmux-state-server.py
+// (/pi/auto-approve). Format: {"%2": true, "%9": true}
+const AUTO_APPROVE_FILE = process.env.PI_AUTO_APPROVE_FILE
+	|| join(homedir(), ".pi", "agent", "auto-approve.json");
+const AUTO_APPROVE_LOG = join(homedir(), ".pi", "agent", "auto-approve.log");
+
+function autoApproveFor(pane: string | undefined): boolean {
+	if (!pane) return false;
+	try {
+		const raw = JSON.parse(readFileSync(AUTO_APPROVE_FILE, "utf8")) as Record<string, unknown>;
+		return !!raw && raw[pane] === true;
+	} catch {
+		return false;
+	}
+}
+
+/** Audit trail: perintah destruktif apa saja yang dijalankan tanpa konfirmasi. */
+function logAutoApprove(pane: string, command: string) {
+	try {
+		appendFileSync(
+			AUTO_APPROVE_LOG,
+			`${new Date().toISOString()}\t${pane}\t${command.replace(/\s+/g, " ").slice(0, 400)}\n`,
+		);
+	} catch {
+		// logging best-effort, jangan sampai memblokir tool call
+	}
+}
 
 export default function (pi: ExtensionAPI) {
 	// ===== ASK / BLOCK: pola destruktif =====
@@ -78,6 +116,18 @@ export default function (pi: ExtensionAPI) {
 		const command = event.input.command as string;
 		if (!requiresConfirmation(command)) {
 			// AUTO: izinkan langsung
+			return undefined;
+		}
+
+		// Auto-approve aktif untuk pane ini? -> jawab "Yes" otomatis.
+		// Dicek SEBELUM cabang !hasUI supaya toggle juga berlaku di mode
+		// non-interactive (pi -p) yang jalan di pane tersebut.
+		const pane = process.env.TMUX_PANE;
+		if (autoApproveFor(pane)) {
+			logAutoApprove(pane as string, command);
+			if (ctx.hasUI) {
+				ctx.ui.notify(`⚡ auto-approve (${pane}): ${command.slice(0, 70)}`, "warning");
+			}
 			return undefined;
 		}
 
