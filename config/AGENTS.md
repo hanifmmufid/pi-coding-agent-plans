@@ -12,6 +12,75 @@
 - Do not expand scope unless required to satisfy the requested behavior.
 - Never silently change frozen requirements.
 
+## Modes
+
+Learning Mode is never the default. Select the workflow from the user's explicit request; if no mode is stated, use EXECUTION.
+
+### LEARNING
+
+Activated when the prompt contains `Mode: LEARNING`, or when the user asks to learn, understand, or be taught the codebase.
+
+Default workflow:
+
+```
+READ
+→ TRACE
+→ PREDICT
+→ PROPOSE
+→ CHANGE
+→ TEST
+→ EXPLAIN
+```
+
+Explanation-first is required and non-trivial changes are not implemented immediately (see Learning Mode).
+
+### EXECUTION
+
+Activated when the prompt contains `Mode: EXECUTION`, or when no mode is stated.
+
+Default workflow:
+
+```
+INVESTIGATE
+→ REPRODUCE
+→ IMPLEMENT SMALLEST SAFE CHANGE
+→ TEST
+→ REPORT
+```
+
+In EXECUTION mode, do not withhold implementation in order to teach unless there is real ambiguity or risk.
+
+## Learning Mode
+
+When the user explicitly requests LEARNING mode, explanation-first work, or asks to understand the code:
+
+- Do not immediately implement non-trivial changes.
+- Start by tracing the existing execution path.
+- Identify the relevant entry point, files, classes, functions, models, and data flow.
+- Explain the system in terms of:
+  1. expected behavior,
+  2. actual behavior,
+  3. the exact point where they diverge.
+- Separate facts observed from the code/data from assumptions.
+- For bugs, establish a reproducible failing case before proposing a fix.
+- Show the smallest relevant code path instead of dumping large files.
+- Before implementation, explain:
+  - the root cause,
+  - the proposed smallest change,
+  - files/functions that will change,
+  - invariants that must remain true,
+  - how the change will be verified.
+- When useful, ask the user to predict what the code will do before revealing the answer.
+- Prefer teaching the existing architecture rather than replacing it with a new abstraction.
+- After implementation:
+  - show the important diff,
+  - explain why each change was needed,
+  - run validation/tests,
+  - explain why those tests prove the fix,
+  - summarize what the user should learn from the change.
+- Avoid hiding complexity behind vague explanations such as "the framework handles it".
+- Explain framework or library behavior when it materially affects the result.
+
 ## Investigation
 
 Before editing a bug:
@@ -25,14 +94,25 @@ Do not use code edits as a substitute for diagnosis.
 
 ## Implementation
 
-- Make the smallest change that satisfies the requirement.
+- Make the smallest change that satisfies the requirement, and choose the simplest implementation that meets it.
 - Preserve backward compatibility unless the task explicitly requires otherwise.
 - Reuse existing abstractions before creating new ones.
-- Avoid speculative cleanup.
+- Avoid speculative cleanup; do not perform refactoring or cleanup that is not required.
 - Avoid unrelated formatting changes.
 - Do not modify files outside the task scope without a concrete reason.
+- Every changed line must be traceable to a requirement, a root cause, or a validation need.
+- If your change orphans an import, variable, helper, or other code, remove the orphans your change created.
+- Do not remove or clean up pre-existing dead code unrelated to the task.
+
+For additional examples of simplicity, surgical changes, and goal-driven execution, use `/skill:karpathy-guidelines` and its accompanying examples when relevant.
 
 ## Validation Loop
+
+For bugs:
+- First create or identify a reproduction/test that fails.
+- Verify that the reproduction actually proves the bug.
+- Only then apply the fix.
+- After fixing, re-run the same reproduction/test.
 
 After implementation:
 1. Run the most targeted relevant validation first.
@@ -76,6 +156,10 @@ A task is DONE only when all applicable conditions are true:
 - no known requirement is left incomplete.
 
 Never declare DONE only because code was written.
+
+Process proportionality:
+- For trivial tasks, use judgment and do not apply excessive process.
+- For complex or risky tasks, use the full investigation, reproduction, implementation, and validation flow.
 
 ## Final Review
 

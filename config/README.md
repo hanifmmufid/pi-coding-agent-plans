@@ -13,7 +13,7 @@ realita konfigurasi yang berjalan.
 
 ```
 config/
-├── AGENTS.md                    → Global execution rules (permission gate, scope, model stack)
+├── AGENTS.md                    → Global execution rules (permission gate, scope, model stack, mode LEARNING/EXECUTION)
 ├── models.json                  → 22 model terdaftar via LiteLLM (apiKey disensor)
 ├── settings.json                → packages, defaultProvider, defaultModel
 ├── quant-tool.json              → Config tool quant_review (cmd-deepseek-v4-pro)
@@ -25,6 +25,10 @@ config/
 ├── extensions/                  → Extension TypeScript (permission-gate, protected-paths, quant-review-tool)
 └── skills/                      → SKILL.md (frontend-design, codebase-study, trading-backtest-analysis)
 ```
+
+> 🎓 **Skill pihak ketiga (tidak di-vendor):** `karpathy-guidelines` dipasang sebagai
+> **git package** yang dipin ke commit, bukan disalin ke repo ini (agar tidak ada
+> duplikasi konten pihak ke-3 dan versinya reproducible).
 
 ---
 
@@ -64,7 +68,7 @@ Pasangan `cmd2-*` memakai akun Command Code kedua (fallback bila akun 1 limit).
 ### settings.json
 - `defaultProvider: "litellm"`
 - `defaultModel: "cmd-deepseek-v4.1-flash"`
-- Packages: frontend-design, browser-screenshot, pi-fovea
+- Packages: frontend-design, browser-screenshot, pi-fovea, andrej-karpathy-skills (pin `@2c60614`)
 
 ### quant-tool.json (tool `quant_review`)
 ```json
@@ -104,6 +108,14 @@ Pasangan `cmd2-*` memakai akun Command Code kedua (fallback bila akun 1 limit).
 > `Frontend Production Gate`; `fix.md` memuat `Frontend Fix Rules`;
 > `review.md` memuat `Frontend Review` tiga dimensi.
 
+> 📌 **Modes + Learning Mode:** `AGENTS.md` memuat section `Modes`
+> (LEARNING vs EXECUTION; **default = EXECUTION**) dan `Learning Mode`
+> (explanation-first: READ → TRACE → PREDICT → PROPOSE → CHANGE → TEST → EXPLAIN).
+> Delta dari skill Karpathy yang bersifat selalu-on dimasukkan ke section existing
+> (`Implementation`: traceability + orphan rule; `Validation Loop`: repro-first untuk bug;
+> `Completion Gate`: proporsionalitas trivial vs kompleks) — **tanpa section duplikat**.
+> `EXAMPLES.md` skill **tidak** disalin ke `AGENTS.md` (agar tidak membebani context).
+
 ## 🔌 Extensions (`config/extensions/`)
 
 | File | Fungsi |
@@ -120,6 +132,7 @@ Pasangan `cmd2-*` memakai akun Command Code kedua (fallback bila akun 1 limit).
 | frontend-design | npm package | UI/UX production-grade (wajib untuk tugas frontend) |
 | codebase-study | `~/.pi/agent/skills/` | Pemahaman repo baru, dokumentasi modular |
 | trading-backtest-analysis | `~/.pi/agent/skills/` | Quant review scope-aware + Execution Contract |
+| karpathy-guidelines | git package (pin `@2c60614`) | Referensi tambahan: contoh simplicity, surgical changes, goal-driven execution (`EXAMPLES.md`). Dipanggil on-demand via `/skill:karpathy-guidelines` |
 
 ---
 
@@ -139,6 +152,13 @@ cp ~/.pi/agent/prompts/*.md config/prompts/
 cp ~/.pi/agent/extensions/permission-gate.ts config/extensions/
 cp ~/.pi/agent/extensions/protected-paths.ts config/extensions/
 cp ~/.pi/agent/extensions/quant-review-tool.ts config/extensions/
+```
+
+Skill pihak ketiga `karpathy-guidelines` **tidak** disalin ke repo — pasang ulang dengan
+perintah yang sama (pin commit) agar reproduktif:
+
+```bash
+pi install https://github.com/multica-ai/andrej-karpathy-skills@2c60614
 ```
 
 > ℹ️ State runtime **tidak** ikut di-commit (bukan config):
