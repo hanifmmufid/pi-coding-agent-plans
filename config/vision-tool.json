@@ -1,6 +1,6 @@
 {
   "provider": "litellm",
-  "model": "cmd-qwen3.8-max",
+  "model": "yond-gpt-6-astra",
   "maxDimension": 1568,
   "jpegQuality": 85,
   "defaultReasoningEffort": "medium",

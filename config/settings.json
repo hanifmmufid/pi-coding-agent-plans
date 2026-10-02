@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.85.1",
   "defaultProvider": "litellm",
-  "defaultModel": "cmd-deepseek-v4.1-flash",
+  "defaultModel": "yond-gpt-6-astra",
   "packages": [
     "npm:@sentiolabs/pi-frontend-design",
     "npm:@scottrbk/browser-screenshot",

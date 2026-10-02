@@ -14,10 +14,10 @@ realita konfigurasi yang berjalan.
 ```
 config/
 ├── AGENTS.md                    → Global execution rules (permission gate, scope, model stack, mode LEARNING/EXECUTION)
-├── models.json                  → 22 model terdaftar via LiteLLM (apiKey disensor)
+├── models.json                  → 20 model terdaftar via LiteLLM (apiKey disensor)
 ├── settings.json                → packages, defaultProvider, defaultModel
-├── quant-tool.json              → Config tool quant_review (cmd-deepseek-v4-pro)
-├── vision-tool.json             → Config tool describe_image (cmd-qwen3.8-max)
+├── quant-tool.json              → Config tool quant_review (nut-deepseek-v4.1-flash)
+├── vision-tool.json             → Config tool describe_image (yond-gpt-6-astra)
 ├── fovea.json                   → Config Pi Fovea (sync mode, budget)
 ├── npm/
 │   └── package.json             → Packages terpasang (frontend-design, screenshot, fovea)
@@ -34,50 +34,53 @@ config/
 
 ## ⚙️ Ringkasan Config Aktif
 
-### models.json — 22 model (provider: LiteLLM → localhost:4000)
+### models.json — 20 model (provider: LiteLLM → localhost:4000)
 
 | Model | Akun/Provider | Peran |
 |-------|---------------|-------|
-| `cmd-deepseek-v4-flash` | Command Code | Executor (generasi sebelumnya) |
-| `cmd-deepseek-v4.1-flash` | **Command Code** | ⭐ Executor default (`settings.json`) |
-| `cmd-deepseek-v4-pro` | **Command Code** | ⭐ Quant reviewer |
-| `cmd-qwen3.8-max` | **Command Code** | ⭐ Vision model |
-| `cmd-muse-1.2-contributor` | Command Code | Cadangan |
-| `cmd-glm-5.3-flash` | Command Code | Cadangan |
-| `cmd-minimax-m3-free` | Command Code | Cadangan |
-| `cmd2-deepseek-v4-flash` | Command Code (akun 2) | Cadangan (failover akun) |
-| `cmd2-deepseek-v4.1-flash` | Command Code (akun 2) | Cadangan (failover akun) |
-| `cmd2-deepseek-v4-pro` | Command Code (akun 2) | Cadangan (failover akun) |
-| `cmd2-qwen3.8-max` | Command Code (akun 2) | Cadangan (failover akun) |
-| `cmd2-muse-1.2-contributor` | Command Code (akun 2) | Cadangan (failover akun) |
-| `cmd2-glm-5.3-flash` | Command Code (akun 2) | Cadangan (failover akun) |
-| `cmd2-minimax-m3-free` | Command Code (akun 2) | Cadangan (failover akun) |
-| `nut-deepseek-v4.1-flash` | Nutaraline (gateway) | Gateway OpenAI-compatible |
-| `nut-glm-5.3-flash` | Nutaraline (gateway) | Gateway OpenAI-compatible |
-| `go-deepseek-v4-flash` | OpenCode Go | Legacy executor |
-| `go-deepseek-v4-pro` | OpenCode Go | Legacy escalation |
-| `go-qwen3.8-max` | OpenCode Go | Legacy (text+image, flaky) |
-| `go-qwen3.7-max` | OpenCode Go | Legacy alternatif |
-| `go-minimax-m3` | OpenCode Go | Legacy |
-| `pi-qwen3.8-max` | Console Go | Legacy vision |
+| `cmd-deepseek-v4-flash` | Command Code | Terdaftar — ⚠️ kredit akun 1 habis |
+| `cmd-deepseek-v4.1-flash` | Command Code | Terdaftar — ⚠️ kredit akun 1 habis |
+| `cmd-deepseek-v4-pro` | Command Code | Terdaftar — ⚠️ kredit akun 1 habis |
+| `cmd-qwen3.8-max` | Command Code | Terdaftar — ⚠️ kredit akun 1 habis |
+| `cmd-muse-1.2-contributor` | Command Code | Terdaftar — ⚠️ kredit akun 1 habis |
+| `cmd-glm-5.3-flash` | Command Code | Terdaftar — ⚠️ kredit akun 1 habis |
+| `cmd2-deepseek-v4-flash` | Command Code (akun 2) | Terdaftar — ⚠️ kredit akun 2 habis |
+| `cmd2-deepseek-v4.1-flash` | Command Code (akun 2) | Terdaftar — ⚠️ kredit akun 2 habis |
+| `cmd2-deepseek-v4-pro` | Command Code (akun 2) | Terdaftar — ⚠️ kredit akun 2 habis |
+| `cmd2-qwen3.8-max` | Command Code (akun 2) | Terdaftar — ⚠️ kredit akun 2 habis |
+| `cmd2-muse-1.2-contributor` | Command Code (akun 2) | Terdaftar — ⚠️ kredit akun 2 habis |
+| `cmd2-glm-5.3-flash` | Command Code (akun 2) | Terdaftar — ⚠️ kredit akun 2 habis |
+| `nut-deepseek-v4.1-flash` | Nutaraline (gateway) | ⭐ Quant reviewer (`quant-tool.json`) |
+| `nut-space-bunny-alpha` | Nutaraline (gateway) | Text-only |
+| `nut-mimo-v2.6-flash` | Nutaraline (gateway) | Text-only |
+| `yond-gpt-6-astra` | **Yonda** (gateway) | ⭐ Executor default (`settings.json`) + vision (`vision-tool.json`) |
+| `yond-auto` | Yonda (gateway) | Context 1M, paling lambat |
+| `yond-gpt-5.6-sol` | Yonda (gateway) | Context 1M, vision tidak akurat |
+| `yond-gpt-5.6-terra` | Yonda (gateway) | Vision tidak akurat |
+| `yond-gpt-5.6-luna` | Yonda (gateway) | Vision akurat |
 
-**Kebijakan:** prefer `cmd-*` (Command Code) — OpenCode Go quota hampir habis.
-Semua peran utama (executor, quant, vision) sudah pindah ke `cmd-*`.
-Pasangan `cmd2-*` memakai akun Command Code kedua (fallback bila akun 1 limit).
+**Kebijakan (2026-10-02):** yang **benar-benar hidup** hanya `yond-*` (5) + `nut-*` (3) — karena itu
+default executor & vision dipindah ke **Yonda** dan quant reviewer ke **Nutaraline**.
+Command Code **akun 1 dan akun 2 sama-sama kehabisan kredit** (`400 insufficient credits`), jadi seluruh
+`cmd-*`/`cmd2-*` gagal; OpenCode Go key invalid; `nut-glm-5.3-flash` hilang dari katalog gateway.
+Entri `cmd-*`/`cmd2-*` sengaja tetap terdaftar agar langsung berfungsi kembali setelah top-up kredit.
+
+> Yang dihapus 2026-10-02: 5× `go-*` + `pi-qwen3.8-max` (key OpenCode Go invalid),
+> `cmd-minimax-m3-free` + `cmd2-minimax-m3-free` (tier gratis pensiun), `nut-glm-5.3-flash` (hilang dari katalog).
 
 ### settings.json
 - `defaultProvider: "litellm"`
-- `defaultModel: "cmd-deepseek-v4.1-flash"`
+- `defaultModel: "yond-gpt-6-astra"` (sejak 2026-10-02, karena `cmd-*` kehabisan kredit)
 - Packages: frontend-design, browser-screenshot, pi-fovea, andrej-karpathy-skills (pin `@2c60614`)
 
 ### quant-tool.json (tool `quant_review`)
 ```json
-{ "model": "cmd-deepseek-v4-pro", "fallbacks": ["cmd-deepseek-v4-flash"], "maxTokens": 32000, "retries": 2 }
+{ "model": "nut-deepseek-v4.1-flash", "fallbacks": ["yond-gpt-6-astra"], "maxTokens": 32000, "retries": 2 }
 ```
 
 ### vision-tool.json (tool `describe_image`)
 ```json
-{ "model": "cmd-qwen3.8-max", "maxDimension": 1568, "jpegQuality": 85 }
+{ "model": "yond-gpt-6-astra", "maxDimension": 1568, "jpegQuality": 85 }
 ```
 
 ### fovea.json

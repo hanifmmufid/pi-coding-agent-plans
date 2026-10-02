@@ -381,7 +381,7 @@ When frontend/UI visual validation requires inspecting a screenshot:
 1. Render the actual page using the existing browser/screenshot workflow.
 2. If the active primary model supports image input, inspect the screenshot normally.
 3. If the active primary model does NOT support image input:
-   - delegate the screenshot to the configured vision-capable model (cmd-qwen3.8-max via describe_image tool, configured in ~/.pi/agent/vision-tool.json),
+   - delegate the screenshot to the configured vision-capable model (yond-gpt-6-astra via describe_image tool, configured in ~/.pi/agent/vision-tool.json),
    - use the vision tool/handoff mechanism,
    - request a structured visual review.
 4. Treat the vision model as a visual reviewer only.
@@ -502,18 +502,24 @@ Source code remains the final source of truth.
 
 For AI/ML trading projects:
 
-- DeepSeek V4 Flash remains the primary executor.
+- The primary executor is whatever `settings.json` → `defaultModel` points to
+  (currently `yond-gpt-6-astra` via the Yonda gateway).
 - The quant reviewer is **delegated via the `quant_review` tool** (a real model
   call through LiteLLM, NOT role-play by the executor). Configure via
   `~/.pi/agent/quant-tool.json` (`/quant config model ...`). Default model is
-  `cmd-deepseek-v4-pro` (Command Code provider — stable for full analysis
-  packets, ~50s), with `cmd-deepseek-v4-flash` as fallback. Prefer `cmd-*`
-  models (Command Code provider) over `go-*` (OpenCode Go subscription is
-  running out). `cmd-qwen3.8-max` exists but is flaky on large packets.
+  `nut-deepseek-v4.1-flash` (Nutaraline gateway) with `yond-gpt-6-astra` as
+  fallback.
+- **Provider reality (as of 2026-10-02):** only the `yond-*` (5) and `nut-*` (3)
+  models actually work. Both Command Code accounts are out of credits
+  (`400 insufficient credits`), so every `cmd-*`/`cmd2-*` entry fails until
+  topped up; the `go-*`/`pi-*` (OpenCode Go) and `*-minimax-m3-free` entries were
+  removed entirely. Do not treat "listed in `GET /v1/models`" as "usable" —
+  verify with a real completion call.
 - Vision model: **delegated via the `describe_image` tool** (configured in
-  `~/.pi/agent/vision-tool.json`). Default is `cmd-qwen3.8-max` (Qwen 3.8 Max
-  via Command Code provider — supports text+image, ~11s on images). Prefer
-  `cmd-*` over `go-*`/`pi-*` (OpenCode Go / Console Go quota running out).
+  `~/.pi/agent/vision-tool.json`). Default is `yond-gpt-6-astra` (Yonda gateway —
+  verified text+image). `yond-gpt-5.6-luna` is the other vision-accurate option;
+  `yond-gpt-5.6-sol`/`yond-gpt-5.6-terra` accept images but mis-read them, and no
+  `nut-*` model supports vision at all.
 - The experiment scope (`ai/experiments/EXPERIMENT_SCOPE.md`) is auto-created by
   the executor (Scope Bootstrap) from the frozen implementation plan at the start
   of a trading/ML task — never wait for the user to request it, and never let the
